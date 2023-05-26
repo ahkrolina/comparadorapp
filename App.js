@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
 
 const App = () => {
   const [gasPrice, setGasPrice] = useState('');
@@ -9,36 +9,39 @@ const App = () => {
   const comparePrices = () => {
     const gasValue = parseFloat(gasPrice);
     const ethanolValue = parseFloat(ethanolPrice);
-    const ethanolPercentage = (ethanolValue / gasValue) * 100;
+    const ethanolGasRatio = ethanolValue / gasValue;
 
-    if (ethanolPercentage > 70) {
-      setResult('Vale a pena comprar etanol.');
+    if (ethanolGasRatio < 0.7) {
+      setResult('A melhor escolha é comprar álcool.');
     } else {
-      setResult('Vale a pena comprar gasolina.');
+      setResult('A melhor escolha é comprar gasolina.');
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Preço da Gasolina:</Text>
-      <TextInput
-        style={styles.input}
-        keyboardType="numeric"
-        value={gasPrice}
-        onChangeText={setGasPrice}
-      />
+      <View style={styles.phoneFrame}>
+        <Image source={require('./assets/down.jpg')} style={styles.image} />
+        <Text style={styles.label}>Preço da GASOLINA:</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={gasPrice}
+          onChangeText={setGasPrice}
+        />
 
-      <Text style={styles.label}>Preço do Etanol:</Text>
-      <TextInput
-        style={styles.input}
-        keyboardType="numeric"
-        value={ethanolPrice}
-        onChangeText={setEthanolPrice}
-      />
+        <Text style={styles.label}>Preço do ÁLCOOL:</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={ethanolPrice}
+          onChangeText={setEthanolPrice}
+        />
 
-      <Button title="Comparar Preços" onPress={comparePrices} />
+        <Button title="Comparar Preços" onPress={comparePrices} />
 
-      <Text style={styles.result}>{result}</Text>
+        <Text style={styles.result}>{result}</Text>
+      </View>
     </View>
   );
 };
@@ -48,28 +51,42 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
     backgroundColor: 'lightblue',
   },
+  phoneFrame: {
+    borderWidth: 4,
+    borderColor: 'darkblue',
+    borderRadius: 20,
+    padding: 32,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
+    marginBottom: 16,
+  },
   label: {
-    fontSize: 18,
+    fontSize: 22,
     marginBottom: 8,
-    color: 'purple',
+    color: 'darkblue',
   },
   input: {
-    width: '100%',
+    width: 300,
     height: 40,
     borderWidth: 1,
     borderColor: '#ccc',
     marginBottom: 16,
     paddingHorizontal: 8,
-    backgroundColor: 'lavender',
+    backgroundColor: 'white',
   },
   result: {
-    fontSize: 18,
+    fontSize: 20,
     marginTop: 16,
-    color: 'darkblue',
+    color: 'red',
   },
 });
 
 export default App;
+
+
+
